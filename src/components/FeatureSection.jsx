@@ -83,10 +83,6 @@ export default function RelayModelSection() {
                       {feature.title !== "Promote Driver Well-Being" && (
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       )}
-
-                      <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-gray-700 shadow-lg">
-                        {String(index + 1).padStart(2, "0")}
-                      </div>
                     </div>
                   </div>
 

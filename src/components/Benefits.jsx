@@ -1,13 +1,13 @@
 import {
   FaPlayCircle,
+  FaTimes,
   FaBrain,
   FaExchangeAlt,
   FaSyncAlt,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
-const videoUrl =
-  "https://drive.google.com/file/d/1JRoPGEFNTY0TJvdcJ5WhV847km3LpOOP/view?usp=sharing";
+const youtubeVideoId = "F7Yq3T6ZSvI";
 
 const benefits = [
   {
@@ -37,14 +37,33 @@ const benefits = [
 ];
 
 export default function Benefits() {
+  const [showModal, setShowModal] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === "Escape" && showModal) {
+        setShowModal(false);
+      }
+    };
+
+    if (showModal) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [showModal]);
+
   const handlePlayVideo = () => {
-    window.open(videoUrl, "_blank");
+    setShowModal(true);
   };
 
   return (
@@ -183,6 +202,36 @@ export default function Benefits() {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="relative bg-white rounded-2xl shadow-2xl w-[90vw] max-w-4xl p-6 transform transition-all duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl z-10 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={() => setShowModal(false)}
+              aria-label="Close Video"
+            >
+              <FaTimes />
+            </button>
+            <div className="relative w-full h-[50vw] max-h-[70vh] rounded-lg overflow-hidden">
+              <iframe
+                src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0`}
+                title="FR8relay Demo Video"
+                className="w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
