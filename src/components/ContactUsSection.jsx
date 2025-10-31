@@ -22,22 +22,23 @@ export default function ContactUsSection() {
 
     try {
       // Use the correct Google Apps Script URL
-      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzqaRHtBN9zRxdWyZcEqR5CEhgg_oPWZlt1NWoFr_OXIgD5Arp8iU5IH_eAIwCBEsSwag/exec";
-      
+      const GOOGLE_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbwtM2W4X_6pq6j-AiSK6lZ7CS9Mo875gKxfm3jpynYkY1XjZYA4WK4aps2EHoNmAESg/exec";
+
       // Create form data for POST request
       const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('email', form.email);
-      formData.append('phone', form.phone);
-      formData.append('company', form.company);
-      formData.append('role', form.role);
-      formData.append('comments', form.comments);
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("phone", form.phone);
+      formData.append("company", form.company);
+      formData.append("role", form.role);
+      formData.append("comments", form.comments);
 
       // Submit using fetch with proper error handling
       await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', // This is needed for Google Apps Script
-        body: formData
+        method: "POST",
+        mode: "no-cors", // This is needed for Google Apps Script
+        body: formData,
       });
 
       // Since we're using no-cors mode, we can't read the response
@@ -51,24 +52,21 @@ export default function ContactUsSection() {
         role: "",
         comments: "",
       });
-      
+
       // Reset status after 3 seconds
       setTimeout(() => {
         setStatus("idle");
       }, 3000);
-      
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
       setStatus("error");
-      
+
       // Reset error status after 5 seconds
       setTimeout(() => {
         setStatus("idle");
       }, 5000);
     }
   };
-
-
 
   return (
     <section
